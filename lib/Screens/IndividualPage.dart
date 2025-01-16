@@ -11,6 +11,7 @@ class _IndividualPageState extends State<IndividualPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: GestureDetector(
           child: Row(
@@ -75,6 +76,51 @@ class _IndividualPageState extends State<IndividualPage> {
                     const PopupMenuItem(child: Text('More')),
                   ]),
         ],
+      ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            ListView(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Type a message',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  prefixIcon: IconButton(
+                    icon: const Icon(Icons.emoji_emotions),
+                    onPressed: () {},
+                  ),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.attach_file),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.camera_alt),
+                        onPressed: () {},
+                      ),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.green,
+                        child: IconButton(
+                          icon: const Icon(Icons.mic),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
