@@ -1,37 +1,51 @@
+import 'package:ChatApp/Model/ChatModel.dart';
+import 'package:ChatApp/Screens/IndividualPage.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({super.key});
+  const CustomCard({Key? key, required this.chatModel}) : super(key: key);
+
+  final ChatModel chatModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
-      child: const Column(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const IndividualPage()));
+      },
+      child: Column(
         children: [
           ListTile(
             leading: CircleAvatar(
               radius: 25,
-              child: Icon(
-                Icons.group,
-                size: 38,
-              ),
+              child: chatModel.isGroup
+                  ? const Icon(
+                      Icons.group,
+                      size: 38,
+                    )
+                  : const Icon(
+                      Icons.person,
+                      size: 38,
+                    ),
               backgroundColor: Colors.blueGrey,
             ),
             title: Text(
-              'Title',
-              style: TextStyle(fontSize: 16),
+              chatModel.name,
+              style: const TextStyle(fontSize: 16),
             ),
             subtitle: Row(
               children: [
-                Icon(Icons.done_all),
-                SizedBox(width: 3),
-                Text('Subtitle'),
+                const Icon(Icons.done_all),
+                const SizedBox(width: 3),
+                Text(
+                  chatModel.currentMessage,
+                ),
               ],
             ),
-            trailing: Text('18:04'),
+            trailing: Text(chatModel.time),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(right: 20, left: 80),
             child: Divider(
               thickness: 0.5,
