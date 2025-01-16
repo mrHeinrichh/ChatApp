@@ -1,5 +1,47 @@
+# Flutter/Dart specific
 .dart_tool/
+.buildlog/
+.packages
+.pub-cache/
+.pub/
+
+# Build output
 build/
-flutter-plugins/
-flutter-plugins-dependencies/
+
+# iOS/Android directories
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
 .ios/
+android/
+
+# Web build output
+web/
+
+# macOS
+.macOS/
+
+# Windows
+windows/
+
+# Linux
+linux/
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Secrets
+.env
+*.key
