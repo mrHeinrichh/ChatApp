@@ -1,4 +1,4 @@
-import 'package:chatapp/Screens/Homescreen.dart';
+import 'package:ChatApp/Screens/Homescreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

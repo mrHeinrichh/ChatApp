@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ChatApp/Pages/ChatPage.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -26,10 +27,14 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
             icon: const Icon(Icons.search),
             onPressed: () {},
           ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
+          PopupMenuButton(
+              itemBuilder: (context) => [
+                    const PopupMenuItem(child: Text('New group')),
+                    const PopupMenuItem(child: Text('New broadcast')),
+                    const PopupMenuItem(child: Text('WhatsApp Web')),
+                    const PopupMenuItem(child: Text('Starred messages')),
+                    const PopupMenuItem(child: Text('Settings')),
+                  ]),
         ],
         bottom: TabBar(controller: _tabController, tabs: const [
           Tab(icon: Icon(Icons.camera_alt)),
@@ -40,7 +45,7 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
       ),
       body: TabBarView(controller: _tabController, children: const [
         Center(child: Text('Camera')),
-        Center(child: Text('Chats')),
+        ChatPage(),
         Center(child: Text('Status')),
         Center(child: Text('Calls')),
       ]),
