@@ -36,12 +36,15 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
                     const PopupMenuItem(child: Text('Settings')),
                   ]),
         ],
-        bottom: TabBar(controller: _tabController, tabs: const [
-          Tab(icon: Icon(Icons.camera_alt)),
-          Tab(text: 'CHATS'),
-          Tab(text: 'STATUS'),
-          Tab(text: 'CALLS'),
-        ]),
+        bottom: TabBar(
+            controller: _tabController,
+            indicatorColor: Colors.white,
+            tabs: const [
+              Tab(icon: Icon(Icons.camera_alt)),
+              Tab(text: 'CHATS'),
+              Tab(text: 'STATUS'),
+              Tab(text: 'CALLS'),
+            ]),
       ),
       body: TabBarView(controller: _tabController, children: const [
         Center(child: Text('Camera')),

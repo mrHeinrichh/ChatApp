@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        primaryColor: Colors.red,
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: Colors.red,
         ),
