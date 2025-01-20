@@ -132,7 +132,11 @@ class _IndividualPageState extends State<IndividualPage> {
                             children: [
                               IconButton(
                                 icon: Icon(Icons.attach_file),
-                                onPressed: () {},
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (builder) => bottomsheet());
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(Icons.camera_alt),
@@ -168,6 +172,46 @@ class _IndividualPageState extends State<IndividualPage> {
             return Future.value(false);
           },
         ),
+      ),
+    );
+  }
+
+  Widget bottomsheet() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 4,
+      child: ListView(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.image),
+            title: const Text('Image'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.video_call),
+            title: const Text('Video'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.insert_drive_file),
+            title: const Text('Document'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.audio_file),
+            title: const Text('Audio'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.gps_fixed_outlined),
+            title: const Text('Location'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Contact'),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }
