@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ChatApp/Pages/ChatPage.dart';
+import 'package:chatapp/Pages/ChatPage.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
