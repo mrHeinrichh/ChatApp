@@ -1,3 +1,4 @@
+import 'package:chatapp/CustomUI/AvatarCard.dart';
 import 'package:chatapp/CustomUI/ButtonCard.dart';
 import 'package:chatapp/CustomUI/ContactCard.dart';
 import 'package:chatapp/Model/ChatModel.dart';
@@ -35,26 +36,7 @@ class _CreateGroupState extends State<CreateGroup> {
         isGroup: true),
   ];
 
-  List<ChatModel> groups = [
-    ChatModel(
-        name: 'Group 1',
-        icon: 'group.svg',
-        time: '10:00',
-        currentMessage: 'Hello',
-        isGroup: true),
-    ChatModel(
-        name: 'Group 2',
-        icon: 'group.svg',
-        time: '11:00',
-        currentMessage: 'Hi',
-        isGroup: true),
-    ChatModel(
-        name: 'Group 3',
-        icon: 'group.svg',
-        time: '11:00',
-        currentMessage: 'Hi',
-        isGroup: true),
-  ];
+  List<ChatModel> groups = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,26 +71,71 @@ class _CreateGroupState extends State<CreateGroup> {
           ),
         ],
       ),
-      body: ListView.builder(
-          itemCount: contacts.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                if (contacts[index].select == false) {
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: contacts.length + 1,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Container(
+                  height: groups.isNotEmpty ? 85 : 10,
+                );
+              }
+              return InkWell(
+                onTap: () {
                   setState(() {
-                    contacts[index].select = true;
+                    if (contacts[index - 1].select) {
+                      groups.remove(contacts[index - 1]);
+                      contacts[index - 1].select = false;
+                    } else {
+                      groups.add(contacts[index - 1]);
+                      contacts[index - 1].select = true;
+                    }
                   });
-                } else {
-                  setState(() {
-                    contacts[index].select = false;
-                  });
-                }
-              },
-              child: ContactCard(
-                contact: contacts[index],
-              ),
-            );
-          }),
+                },
+                child: ContactCard(
+                  contact: contacts[index - 1],
+                ),
+              );
+            },
+          ),
+          groups.isNotEmpty
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: 75,
+                        color: Colors.white,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: groups.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  groups[index].select = false;
+                                  groups.removeAt(index);
+                                });
+                              },
+                              child: AvatarCard(
+                                contact: groups[index],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }
