@@ -1,3 +1,4 @@
+import 'package:chatapp/Pages/CameraPage.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Pages/ChatPage.dart';
 
@@ -47,7 +48,7 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
             ]),
       ),
       body: TabBarView(controller: _tabController, children: const [
-        Center(child: Text('Camera')),
+        CameraPage(),
         ChatPage(),
         Center(child: Text('Status')),
         Center(child: Text('Calls')),
