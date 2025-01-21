@@ -8,19 +8,16 @@ class ButtonCard extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 25,
-          child: Icon(icon),
-        ),
-        title: Text(
-          name,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+    return ListTile(
+      leading: CircleAvatar(
+        radius: 25,
+        child: Icon(icon),
+      ),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

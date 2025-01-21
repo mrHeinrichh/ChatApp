@@ -5,6 +5,7 @@ class ChatModel {
   final String time;
   final String currentMessage;
   final status;
+  bool select = false;
 
   ChatModel({
     required this.name,
@@ -13,5 +14,6 @@ class ChatModel {
     required this.time,
     required this.currentMessage,
     this.status,
+    this.select = false,
   });
 }
