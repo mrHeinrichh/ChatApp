@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:chatapp/Screens/CameraViewScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -26,7 +31,6 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Ensure CameraPreview takes the full screen
           FutureBuilder(
             future: cameraValue,
             builder: (context, snapshot) {
@@ -58,7 +62,9 @@ class _CameraScreenState extends State<CameraScreen> {
                       GestureDetector(
                         onLongPress: () {},
                         onLongPressUp: () {},
-                        onTap: () {},
+                        onTap: () {
+                          takePhoto(context);
+                        },
                         child: Container(
                           height: 70,
                           width: 70,
@@ -90,5 +96,33 @@ class _CameraScreenState extends State<CameraScreen> {
     _cameraController
         .dispose(); // Dispose of the camera controller to release resources
     super.dispose();
+  }
+
+  void takePhoto(BuildContext context) async {
+    try {
+      // Take the picture
+      XFile picture = await _cameraController.takePicture();
+
+      // Get the file path
+      final String path = picture.path;
+
+      // Check if the file exists
+      final file = File(path);
+      if (await file.exists()) {
+        print('File saved at $path');
+      } else {
+        print('Error: File does not exist at $path');
+      }
+
+      // Navigate to CameraViewScreen after confirming the file exists
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CameraViewScreen(path: path),
+        ),
+      );
+    } catch (e) {
+      print('Error taking picture: $e');
+    }
   }
 }
