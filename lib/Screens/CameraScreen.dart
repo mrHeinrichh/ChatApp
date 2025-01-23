@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:chatapp/Screens/CameraViewScreen.dart';
+import 'package:chatapp/Screens/VideoView.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,7 +19,8 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController _cameraController;
   late Future<void> cameraValue;
-
+  bool IsRecording = false;
+  String videopath = "";
   @override
   void initState() {
     super.initState();
@@ -60,20 +62,65 @@ class _CameraScreenState extends State<CameraScreen> {
                         iconSize: 28,
                       ),
                       GestureDetector(
-                        onLongPress: () {},
-                        onLongPressUp: () {},
-                        onTap: () {
-                          takePhoto(context);
-                        },
-                        child: Container(
-                          height: 70,
-                          width: 70,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                        ),
-                      ),
+                          onLongPress: () async {
+                            try {
+                              // Start video recording
+                              await _cameraController.startVideoRecording();
+                              print('Video recording started');
+
+                              // Stop the video recording after a delay (e.g., 5 seconds)
+                              await Future.delayed(Duration(seconds: 5));
+                              final XFile videoFile =
+                                  await _cameraController.stopVideoRecording();
+                              print('Video recording stopped');
+
+                              // Save the video to a specific path
+                              final path = join(
+                                (await getTemporaryDirectory()).path,
+                                '${DateTime.now()}.mp4',
+                              );
+
+                              await videoFile.saveTo(path);
+                              videopath = path;
+                              print('Video saved to $path');
+                            } catch (e) {
+                              print('Error during video recording: $e');
+                            }
+
+                            setState(() {
+                              IsRecording = true;
+                            });
+                          },
+                          onLongPressUp: () async {
+                            await _cameraController.stopVideoRecording();
+                            setState(() {
+                              IsRecording = false;
+                            });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VideoViewPage(
+                                  path: videopath,
+                                ),
+                              ),
+                            );
+                          },
+                          onTap: () {
+                            if (!IsRecording) {
+                              takePhoto(context);
+                            }
+                          },
+                          child: IsRecording
+                              ? Icon(
+                                  Icons.radio_button_on,
+                                  color: Colors.red,
+                                  size: 80,
+                                )
+                              : Icon(
+                                  Icons.panorama_fish_eye,
+                                  color: Colors.white,
+                                  size: 70,
+                                )),
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.flip_camera_ios),
