@@ -62,14 +62,20 @@ class _CameraScreenState extends State<CameraScreen> {
                         iconSize: 28,
                       ),
                       GestureDetector(
-                          onLongPress: () async {
+                        onLongPress: () async {
+                          try {
+                            await _cameraController.startVideoRecording();
+                            print('Video recording started');
+                            setState(() {
+                              IsRecording = true;
+                            });
+                          } catch (e) {
+                            print('Error starting video recording: $e');
+                          }
+                        },
+                        onLongPressUp: () async {
+                          if (IsRecording) {
                             try {
-                              // Start video recording
-                              await _cameraController.startVideoRecording();
-                              print('Video recording started');
-
-                              // Stop the video recording after a delay (e.g., 5 seconds)
-                              await Future.delayed(Duration(seconds: 5));
                               final XFile videoFile =
                                   await _cameraController.stopVideoRecording();
                               print('Video recording stopped');
@@ -83,44 +89,41 @@ class _CameraScreenState extends State<CameraScreen> {
                               await videoFile.saveTo(path);
                               videopath = path;
                               print('Video saved to $path');
-                            } catch (e) {
-                              print('Error during video recording: $e');
-                            }
 
-                            setState(() {
-                              IsRecording = true;
-                            });
-                          },
-                          onLongPressUp: () async {
-                            await _cameraController.stopVideoRecording();
-                            setState(() {
-                              IsRecording = false;
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VideoViewPage(
-                                  path: videopath,
+                              setState(() {
+                                IsRecording = false;
+                              });
+
+                              // Navigate to the VideoViewPage
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VideoViewPage(path: videopath),
                                 ),
-                              ),
-                            );
-                          },
-                          onTap: () {
-                            if (!IsRecording) {
-                              takePhoto(context);
+                              );
+                            } catch (e) {
+                              print('Error stopping video recording: $e');
                             }
-                          },
-                          child: IsRecording
-                              ? Icon(
-                                  Icons.radio_button_on,
-                                  color: Colors.red,
-                                  size: 80,
-                                )
-                              : Icon(
-                                  Icons.panorama_fish_eye,
-                                  color: Colors.white,
-                                  size: 70,
-                                )),
+                          }
+                        },
+                        onTap: () {
+                          if (!IsRecording) {
+                            takePhoto(context);
+                          }
+                        },
+                        child: IsRecording
+                            ? Icon(
+                                Icons.radio_button_on,
+                                color: Colors.red,
+                                size: 80,
+                              )
+                            : Icon(
+                                Icons.panorama_fish_eye,
+                                color: Colors.white,
+                                size: 70,
+                              ),
+                      ),
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.flip_camera_ios),
