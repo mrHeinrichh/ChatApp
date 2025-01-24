@@ -21,6 +21,7 @@ class _CameraScreenState extends State<CameraScreen> {
   late Future<void> cameraValue;
   bool IsRecording = false;
   String videopath = "";
+  bool flash = false;
   @override
   void initState() {
     super.initState();
@@ -56,8 +57,19 @@ class _CameraScreenState extends State<CameraScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.flash_off),
+                        onPressed: () {
+                          setState(() {
+                            flash = !flash;
+                          });
+                          flash
+                              ? _cameraController.setFlashMode(FlashMode.torch)
+                              : _cameraController.setFlashMode(FlashMode.off);
+                        },
+                        icon: Icon(
+                          flash ? Icons.flash_on : Icons.flash_off,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                         color: Colors.white,
                         iconSize: 28,
                       ),
@@ -113,19 +125,30 @@ class _CameraScreenState extends State<CameraScreen> {
                           }
                         },
                         child: IsRecording
-                            ? Icon(
+                            ? const Icon(
                                 Icons.radio_button_on,
                                 color: Colors.red,
                                 size: 80,
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.panorama_fish_eye,
                                 color: Colors.white,
                                 size: 70,
                               ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_cameraController.description.lensDirection ==
+                              CameraLensDirection.front) {
+                            _cameraController = CameraController(
+                                cameras[0], ResolutionPreset.max);
+                          } else {
+                            _cameraController = CameraController(
+                                cameras[1], ResolutionPreset.max);
+                          }
+                          cameraValue = _cameraController.initialize();
+                          setState(() {});
+                        },
                         icon: const Icon(Icons.flip_camera_ios),
                         color: Colors.white,
                         iconSize: 28,
