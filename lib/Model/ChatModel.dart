@@ -1,13 +1,17 @@
+import 'package:flutter/material.dart';
+
 class ChatModel {
+  int id;
   final String name;
-  final String icon;
+  final IconData icon;
   bool isGroup;
   final String time;
   final String currentMessage;
-  final status;
+  final dynamic status;
   bool select = false;
 
   ChatModel({
+    this.id = 0,
     required this.name,
     required this.icon,
     required this.isGroup,

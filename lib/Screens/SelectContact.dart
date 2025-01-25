@@ -17,21 +17,21 @@ class _SelectContactState extends State<SelectContact> {
     List<ChatModel> contacts = [
       ChatModel(
           name: 'John Doe',
-          icon: 'person.svg',
+          icon: Icons.person,
           time: '10:00',
           currentMessage: 'Hello',
           status: 'Fullstack Developer',
           isGroup: false),
       ChatModel(
           name: 'Jane Doe',
-          icon: 'person.svg',
+          icon: Icons.person,
           time: '11:00',
           currentMessage: 'Hi',
           status: 'Flutter Developer',
           isGroup: true),
       ChatModel(
           name: 'Jane Doe',
-          icon: 'person.svg',
+          icon: Icons.person,
           status: 'Flutter Developer',
           time: '11:00',
           currentMessage: 'Hi',

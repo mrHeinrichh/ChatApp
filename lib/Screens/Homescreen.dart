@@ -1,9 +1,12 @@
+import 'package:chatapp/Model/ChatModel.dart';
 import 'package:chatapp/Pages/CameraPage.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Pages/ChatPage.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  Homescreen({super.key, required this.chatmodels, required this.sourceChat});
+  final List<ChatModel> chatmodels;
+  final ChatModel sourceChat;
 
   @override
   State<Homescreen> createState() => _HomescreenState();
@@ -47,11 +50,14 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
               Tab(text: 'CALLS'),
             ]),
       ),
-      body: TabBarView(controller: _tabController, children: const [
-        CameraPage(),
-        ChatPage(),
-        Center(child: Text('Status')),
-        Center(child: Text('Calls')),
+      body: TabBarView(controller: _tabController, children: [
+        const CameraPage(),
+        ChatPage(
+          chatmodels: widget.chatmodels,
+          sourceChat: widget.sourceChat,
+        ),
+        const Center(child: Text('Status')),
+        const Center(child: Text('Calls')),
       ]),
     );
   }

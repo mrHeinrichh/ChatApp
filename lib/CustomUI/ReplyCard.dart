@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ReplyCard extends StatelessWidget {
-  const ReplyCard({super.key});
-
+  const ReplyCard({super.key, required this.message});
+  final String message;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -11,9 +11,9 @@ class ReplyCard extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width - 45,
           ),
-          child: const Card(
+          child: Card(
             elevation: 1,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
@@ -21,22 +21,22 @@ class ReplyCard extends StatelessWidget {
               ),
             ),
             color: Colors.white,
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     right: 30,
                     left: 10,
                     top: 10,
                     bottom: 20,
                   ),
                   child: Text(
-                    'This is a message',
-                    style: TextStyle(fontSize: 16),
+                    message,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   bottom: 4,
                   right: 10,
                   child: Row(
